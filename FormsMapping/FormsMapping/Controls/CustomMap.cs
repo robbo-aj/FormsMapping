@@ -8,6 +8,20 @@ namespace FormsMapping.Controls
 {
     public class CustomMap : Map
     {
+        public double CircleRadius { get; set; }
+
+        public static readonly BindableProperty CircleRadiusProperty = BindableProperty.Create(
+            nameof(CircleRadius),
+            typeof(double),
+            typeof(CustomMap),
+            0d,
+            propertyChanged: (b, o, n) =>
+            {
+                var bindable = (CustomMap)b;
+            });
+
+        public Position MapPosition { get; set; }
+
         public static readonly BindableProperty MapPositionProperty = BindableProperty.Create(
                      nameof(MapPosition),
                      typeof(Position),
@@ -17,10 +31,10 @@ namespace FormsMapping.Controls
                      {
                          ((CustomMap)b).MoveToRegion(MapSpan.FromCenterAndRadius(
                               (Position)n,
-                              Distance.FromMiles(10)));
+                              Distance.FromMiles(30)));
                      });
 
-        public Position MapPosition { get; set; }
+        public IList<Pin> MapPins { get; set; }
 
         public static readonly BindableProperty MapPinsProperty = BindableProperty.Create(
                      nameof(Pins),
@@ -58,6 +72,5 @@ namespace FormsMapping.Controls
                              });
                          };
                      });
-        public IList<Pin> MapPins { get; set; }
     }
 }
