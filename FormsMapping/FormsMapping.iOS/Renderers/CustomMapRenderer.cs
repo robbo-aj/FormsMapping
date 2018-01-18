@@ -46,11 +46,18 @@ namespace FormsMapping.iOS.Renderers
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            //base.OnElementPropertyChanged(sender, e);
+            base.OnElementPropertyChanged(sender, e);
 
             if(e.PropertyName == "MapPosition" || e.PropertyName == "CircleRadius")
             {
                 var formsMap = (CustomMap)sender;
+                var nativeMap = Control as MKMapView;
+                var centre = formsMap.MapPosition;
+                var radius = formsMap.CircleRadius;
+                nativeMap.RemoveOverlays();
+
+                var circleOverlay = MKCircle.Circle(new CoreLocation.CLLocationCoordinate2D(centre.Latitude, centre.Longitude), radius);
+                nativeMap.AddOverlay(circleOverlay);
             }
         }
 
@@ -62,7 +69,7 @@ namespace FormsMapping.iOS.Renderers
                 _circleRenderer = new MKCircleRenderer(overlay as MKCircle)
                 {
                     FillColor = UIColor.Red,
-                    Alpha = 0.4f
+                    Alpha = 0.3f
                 };
             }
             return _circleRenderer;

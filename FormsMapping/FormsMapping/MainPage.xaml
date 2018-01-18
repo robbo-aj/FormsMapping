@@ -5,10 +5,52 @@
     xmlns:controls="clr-namespace:FormsMapping.Controls"
     x:Class="FormsMapping.MainPage">
 
-    <controls:CustomMap 
-        MapType="Street" 
-        MapPosition="{Binding CentrePosition}"
-        MapPins="{Binding Pins}"
-        CircleRadius="{Binding Radius}" />
+    <Grid RowSpacing="10" ColumnSpacing="10" Padding="0,20,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50*" />
+            <ColumnDefinition Width="50*" />
+        </Grid.ColumnDefinitions>
+        <Button 
+            Grid.Row="0" 
+            Grid.Column="0"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            WidthRequest="100"
+            Text="London" 
+            BackgroundColor="DeepSkyBlue" 
+            TextColor="White" 
+            Command="{Binding LondonCommand}" />
+        <Button 
+            Grid.Row="0" 
+            Grid.Column="1" 
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            WidthRequest="100"
+            Text="Moscow" 
+            BackgroundColor="Red" 
+            TextColor="White" 
+            Command="{Binding MoscowCommand}" />
+        <Slider
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            HorizontalOptions="CenterAndExpand"
+            VerticalOptions="Center"
+            WidthRequest="400"
+            Margin="10,0" />
+        <controls:CustomMap
+            Grid.Row="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            MapType="Street" 
+            MapPosition="{Binding CentrePosition}"
+            MapPins="{Binding Pins}"
+            CircleRadius="{Binding Radius}" />
+    </Grid>
 
 </ContentPage>
