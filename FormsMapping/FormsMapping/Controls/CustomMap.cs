@@ -18,6 +18,7 @@ namespace FormsMapping.Controls
             propertyChanged: (b, o, n) =>
             {
                 var bindable = (CustomMap)b;
+                bindable.CircleRadius = Distance.FromMiles((double)n).Meters;
             });
 
         public Position MapPosition { get; set; }
@@ -29,7 +30,9 @@ namespace FormsMapping.Controls
                      new Position(0, 0),
                      propertyChanged: (b, o, n) =>
                      {
-                         ((CustomMap)b).MoveToRegion(MapSpan.FromCenterAndRadius(
+                         var bindable = (CustomMap)b;
+                         bindable.MapPosition = (Position)n;
+                         bindable.MoveToRegion(MapSpan.FromCenterAndRadius(
                               (Position)n,
                               Distance.FromMiles(30)));
                      });

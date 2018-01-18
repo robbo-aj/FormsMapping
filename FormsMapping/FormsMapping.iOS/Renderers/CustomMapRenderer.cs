@@ -39,7 +39,7 @@ namespace FormsMapping.iOS.Renderers
 
                 nativeMap.OverlayRenderer = GetOverlayRenderer;
 
-                var circleOverlay = MKCircle.Circle(new CoreLocation.CLLocationCoordinate2D(-37.8141, 144.9633), 10000);
+                var circleOverlay = MKCircle.Circle(new CoreLocation.CLLocationCoordinate2D(centre.Latitude, centre.Longitude), radius);
                 nativeMap.AddOverlay(circleOverlay);
             }
         }
@@ -48,7 +48,7 @@ namespace FormsMapping.iOS.Renderers
         {
             //base.OnElementPropertyChanged(sender, e);
 
-            if(e.PropertyName == "MapPosition" || e.PropertyName == "MapPins" || e.PropertyName == "CircleRadius")
+            if(e.PropertyName == "MapPosition" || e.PropertyName == "CircleRadius")
             {
                 var formsMap = (CustomMap)sender;
             }
