@@ -15,7 +15,7 @@ namespace FormsMapping.Controls
             typeof(double),
             typeof(CustomMap),
             0d,
-            propertyChanged: (b, o, n) =>
+            propertyChanging: (b, o, n) =>
             {
                 var bindable = (CustomMap)b;
                 bindable.CircleRadius = Distance.FromMiles((double)n).Meters;
@@ -28,13 +28,11 @@ namespace FormsMapping.Controls
                      typeof(Position),
                      typeof(CustomMap),
                      new Position(0, 0),
-                     propertyChanged: (b, o, n) =>
+                     propertyChanging: (b, o, n) =>
                      {
-                         var bindable = (CustomMap)b;
-                         bindable.MapPosition = (Position)n;
-                         bindable.MoveToRegion(MapSpan.FromCenterAndRadius(
-                              (Position)n,
-                              Distance.FromMiles(30)));
+                        var bindable = (CustomMap)b;
+                        bindable.MapPosition = (Position)n;
+                        bindable.MoveToRegion(MapSpan.FromCenterAndRadius((Position)n, Distance.FromMiles(30)));
                      });
 
         public IList<Pin> MapPins { get; set; }

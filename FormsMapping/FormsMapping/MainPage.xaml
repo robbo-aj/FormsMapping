@@ -47,7 +47,7 @@
             Grid.Row="2"
             Grid.Column="0"
             Grid.ColumnSpan="2"
-            MapType="Street" 
+            MapType="Street"
             MapPosition="{Binding CentrePosition}"
             MapPins="{Binding Pins}"
             CircleRadius="{Binding Radius}" />

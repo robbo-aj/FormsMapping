@@ -18,7 +18,7 @@ namespace FormsMapping.ViewModels
             {
                 Position = this.CentrePosition,
                 Type = PinType.Generic,
-                Label = $"Centre of {Radius} miles from London"
+                Label = $"Centre of '{this.Radius} miles from London'"
             });
         });
 
@@ -30,7 +30,7 @@ namespace FormsMapping.ViewModels
             {
                 Position = this.CentrePosition,
                 Type = PinType.Generic,
-                Label = $"Centre of {Radius} miles from Moscow"
+                Label = $"Centre of '{this.Radius} miles from Moscow'"
             });
         });
 

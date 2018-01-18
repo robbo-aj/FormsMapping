@@ -14,6 +14,7 @@ namespace FormsMapping.iOS.Renderers
     public class CustomMapRenderer : MapRenderer
     {
         MKCircleRenderer _circleRenderer;
+        MKCircle _circleOverlay;
 
         protected override void OnElementChanged(ElementChangedEventArgs<View> e)
         {
@@ -39,8 +40,8 @@ namespace FormsMapping.iOS.Renderers
 
                 nativeMap.OverlayRenderer = GetOverlayRenderer;
 
-                var circleOverlay = MKCircle.Circle(new CoreLocation.CLLocationCoordinate2D(centre.Latitude, centre.Longitude), radius);
-                nativeMap.AddOverlay(circleOverlay);
+                _circleOverlay = MKCircle.Circle(new CoreLocation.CLLocationCoordinate2D(centre.Latitude, centre.Longitude), radius);
+                nativeMap.AddOverlay(_circleOverlay);
             }
         }
 
@@ -48,16 +49,17 @@ namespace FormsMapping.iOS.Renderers
         {
             base.OnElementPropertyChanged(sender, e);
 
-            if(e.PropertyName == "MapPosition" || e.PropertyName == "CircleRadius")
-            {
-                var formsMap = (CustomMap)sender;
-                var nativeMap = Control as MKMapView;
-                var centre = formsMap.MapPosition;
-                var radius = formsMap.CircleRadius;
-                nativeMap.RemoveOverlays();
+            var formsMap = Element as CustomMap;
+            var centre = formsMap.MapPosition;
+            var radius = formsMap.CircleRadius;
 
-                var circleOverlay = MKCircle.Circle(new CoreLocation.CLLocationCoordinate2D(centre.Latitude, centre.Longitude), radius);
-                nativeMap.AddOverlay(circleOverlay);
+            var nativeMap = Control as MKMapView;
+
+            if (e.PropertyName == "CircleRadius" || e.PropertyName == "MapPosition")
+            {
+                nativeMap.RemoveOverlay(_circleOverlay);
+                _circleOverlay = MKCircle.Circle(new CoreLocation.CLLocationCoordinate2D(centre.Latitude, centre.Longitude), radius);
+                nativeMap.AddOverlay(_circleOverlay);
             }
         }
 
