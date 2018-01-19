@@ -5,10 +5,10 @@ namespace FormsMapping
 {
 	public partial class MainPage : ContentPage
 	{
-		public MainPage()
+        public MainPage()
 		{
             BindingContext = new MainViewModel();
 			InitializeComponent();
 		}
-	}
+    }
 }

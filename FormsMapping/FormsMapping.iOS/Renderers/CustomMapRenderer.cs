@@ -58,6 +58,10 @@ namespace FormsMapping.iOS.Renderers
             if (e.PropertyName == "CircleRadius" || e.PropertyName == "MapPosition")
             {
                 nativeMap.RemoveOverlay(_circleOverlay);
+                nativeMap.OverlayRenderer = null;
+                _circleRenderer = null;
+
+                nativeMap.OverlayRenderer = GetOverlayRenderer;
                 _circleOverlay = MKCircle.Circle(new CoreLocation.CLLocationCoordinate2D(centre.Latitude, centre.Longitude), radius);
                 nativeMap.AddOverlay(_circleOverlay);
             }
@@ -70,7 +74,7 @@ namespace FormsMapping.iOS.Renderers
                 var overlay = Runtime.GetNSObject(overlayWrapper.Handle) as IMKOverlay;
                 _circleRenderer = new MKCircleRenderer(overlay as MKCircle)
                 {
-                    FillColor = UIColor.Red,
+                    FillColor = UIColor.FromRGB(211,47,47),
                     Alpha = 0.3f
                 };
             }

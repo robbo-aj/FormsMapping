@@ -32,7 +32,7 @@ namespace FormsMapping.Controls
                      {
                         var bindable = (CustomMap)b;
                         bindable.MapPosition = (Position)n;
-                        bindable.MoveToRegion(MapSpan.FromCenterAndRadius((Position)n, Distance.FromMiles(30)));
+                        bindable.MoveToRegion(MapSpan.FromCenterAndRadius((Position)n, Distance.FromMiles(40)));
                      });
 
         public IList<Pin> MapPins { get; set; }

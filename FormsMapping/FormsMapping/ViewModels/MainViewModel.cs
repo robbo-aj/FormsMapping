@@ -1,5 +1,6 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
+using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Xamarin.Forms.Maps;
@@ -12,6 +13,7 @@ namespace FormsMapping.ViewModels
 
         public ICommand LondonCommand => new DelegateCommand(() =>
         {
+            IsLondonSelected = true;
             this.CentrePosition = new Position(51.5074, -0.1278);
             this.Pins.Clear();
             this.Pins.Add(new Pin
@@ -20,10 +22,12 @@ namespace FormsMapping.ViewModels
                 Type = PinType.Generic,
                 Label = $"Centre of '{this.Radius} miles from London'"
             });
+            this.CityAndRadius = $"City = London, Radius = {this.Radius} miles";
         });
 
         public ICommand MoscowCommand => new DelegateCommand(() =>
         {
+            IsLondonSelected = false;
             this.CentrePosition = new Position(55.7558, 37.6173);
             this.Pins.Clear();
             this.Pins.Add(new Pin
@@ -32,11 +36,14 @@ namespace FormsMapping.ViewModels
                 Type = PinType.Generic,
                 Label = $"Centre of '{this.Radius} miles from Moscow'"
             });
+            this.CityAndRadius = $"City = Moscow, Radius = {this.Radius} miles";
         });
 
         #endregion
 
         #region properties
+
+        public bool IsLondonSelected { get; set; } = true;
 
         Position _centrePosition;
         public Position CentrePosition
@@ -56,7 +63,27 @@ namespace FormsMapping.ViewModels
         public double Radius
         {
             get => _radius;
-            set => SetProperty(ref _radius, value);
+            set
+            {
+                var roundedValue = Math.Round(value / 1.0);
+                SetProperty(ref _radius, roundedValue);
+                var city = IsLondonSelected ? "London" : "Moscow";
+                this.Pins.Clear();
+                this.Pins.Add(new Pin
+                {
+                    Position = this.CentrePosition,
+                    Type = PinType.Generic,
+                    Label = $"Centre of '{this.Radius} miles from {city}'"
+                });
+                this.CityAndRadius = $"City = {city}, Radius = {this.Radius} miles";
+            }
+        }
+
+        string _cityAndRadius;
+        public string CityAndRadius
+        {
+            get => _cityAndRadius;
+            set => SetProperty(ref _cityAndRadius, value);
         }
 
         #endregion
